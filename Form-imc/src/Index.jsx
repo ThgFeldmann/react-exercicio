@@ -6,28 +6,30 @@ const Form = () => {
     
     const calculo = () => {
         const resultado = peso / (altura * altura);
+        let imcArredondado = Math.round(resultado * 100) / 100;
 
-        console.log(resultado);
+        imcArredondado.toString();
+
+        if (imcArredondado <= 1) {
+            alert("Os valores inseridos não são válidos.");
+        } else {
+            return ( // não retorna
+                <div>
+                    {imcArredondado}
+                </div>
+            )
+        }
     }
-    
-    // function calculo(altura, peso) {
-    //     console.log(peso / (altura * altura));
-    //     // const calculoImc = peso / (altura * altura);
-    //     // return calculoImc;
-    // }
 
     return (
         <div class="container">
             <h1>Calculadora de IMC</h1>
             <form>
                 <input type="number" placeholder="Digite sua altura" required onChange={evento => setAltura(evento.target.value)} />
-                <input type="number" placeholder="Digite seu peso" required onChange={evento => setPeso(evento.target.value)} />
-                <button type="button">
+                <input type="number" placeholder="Digite seu peso" required  onChange={evento => setPeso(evento.target.value)}/>
+                <button type="button" onClick={evento => calculo()}>
                     Calcular
                 </button>
-                {calculo()}
-                {altura}
-                {peso}
             </form>
         </div>
     )
@@ -38,6 +40,6 @@ export default Form;
 
 // p / h^2 | calculo imc
 
-// input.value => var => calculo => return resultado | objetivo
+// descobrir como retornar o imcArredondado para o html | objetivo atual
 
 // https://www.programasaudefacil.com.br/calculadora-de-imc | link imc calculator example
