@@ -31,4 +31,9 @@ hr {
 
 .highlited {
     background-color: green;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
 }

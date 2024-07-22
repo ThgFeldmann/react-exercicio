@@ -15,45 +15,45 @@ function App() {
     console.log("tarefa inicializada");
     if (altura !== ('') && peso !== ('')) {
       calculo();
-      indicaNaTabela();
       return (
-        <h3 className="text-center mb-4 border border-dark rounded bg-success text-white">Seu IMC é: {imc}</h3>
-      )
+        <h3 id="imcText" className="text-center mb-4 border border-dark rounded bg-success text-white hidden">Seu IMC é: {imc}</h3>
+      );
     } else {
       imc = '';
     }
     console.log("tarefa finalizada");
   }
 
-  function indicaNaTabela() {
-    console.log("tarefa inicializada");
+  function indicaNaTabela() { // lendo varias condicoes | erro
+    console.log(imc);
     if (imc >= 40) {
       let selectedRow = document.getElementById("linha-5");
       selectedRow.classList.add('highlited');
-      selectedRow = '';
-      console.log("erro linha-5");
-    } else if (imc >= 30) {
+      return selectedRow = '';
+    } else if (imc >= 30 && imc < 40) {
       let selectedRow = document.getElementById("linha-4");
       selectedRow.classList.add('highlited');
-      selectedRow = '';
-      console.log("erro linha-4");
-    } else if (imc >= 25) {
+      return selectedRow = '';
+    } else if (imc >= 25 && imc < 30) {
       let selectedRow = document.getElementById("linha-3");
       selectedRow.classList.add('highlited');
-      selectedRow = '';
-      console.log("erro linha-3");
-    } else if (imc >= 18,5) {
+      return selectedRow = '';
+    } else if (imc >= 18.5 && imc < 25) {
       let selectedRow = document.getElementById("linha-2");
-      selectedRow.classList.add('highlited'); // erro "TypeError: Cannot read properties of undefined (reading 'add')"
-      selectedRow = '';
-      console.log("erro linha-2");
-    } else (imc > 2 && imc <= 18.5) ;{
+      selectedRow.classList.add('highlited');
+      return selectedRow ='';
+    } else if (imc < 18.5) ;{
       let selectedRow = document.getElementById("linha-1");
       selectedRow.classList.add('highlited');
-      selectedRow = '';
-      console.log("erro linha-1")
+      return selectedRow = '';
     }
-    console.log("tarefa finalizada");
+  }
+
+  function buttonClick() {
+    validaValores();
+    let imcShowed = document.getElementById("imcText");
+    imcShowed.classList.remove('hidden');
+    indicaNaTabela();
   }
 
   return(
@@ -61,7 +61,10 @@ function App() {
       <h1 className="text-center">Calculadora de IMC</h1>
         <form class="row d-flex justify-content-center">
           <input id="first-input" type="number" placeholder="Digite sua altura" onChange={evento => setAltura(evento.target.value)} />
-          <input type="number" placeholder="Digite seu peso" onChange={evento => setPeso(evento.target.value)}/>
+          <input type="number" placeholder="Digite seu peso" required onChange={evento => setPeso(evento.target.value)}/>
+          <button type="button" className="btn btn-success border border-dark mt-2" onClick={evento => buttonClick()}>
+            Calcular
+          </button>
         </form>
         {validaValores()}
         <div className="border rounded border-dark"> {/* tabela */}
@@ -81,7 +84,7 @@ function App() {
               </div>
             </div>
             <hr />
-            <div className="row " id="linha-1"> {/* < 18,5 */}
+            <div className="row" id="linha-1"> {/* < 18,5 */}
               <div className="col-md-4">
                 <h5>Menor que 18,5</h5>
               </div>
@@ -92,7 +95,7 @@ function App() {
                 <h5>0</h5>
               </div>
             </div>
-            <div className="row " id="linha-2"> {/* entre 18,5 até 24,9 */}
+            <div className="row" id="linha-2"> {/* entre 18,5 até 24,9 */}
               <div className="col-md-4">
                 <h5>Entre 18,5 e 24,9</h5>
               </div>
@@ -103,7 +106,7 @@ function App() {
                 <h5>0</h5>
               </div>
             </div>
-            <div className="row " id="linha-3"> {/* entre 25,0 até 29,9 */}
+            <div className="row" id="linha-3"> {/* entre 25,0 até 29,9 */}
               <div className="col-md-4">
                 <h5>Entre 25,0 e 29,9</h5>
               </div>
@@ -114,7 +117,7 @@ function App() {
                 <h5>I</h5>
               </div>
             </div>
-            <div className="row " id="linha-4"> {/* entre 30,0 até 39,9 */}
+            <div className="row" id="linha-4"> {/* entre 30,0 até 39,9 */}
               <div className="col-md-4">
                 <h5>Entre 30,0 e 39,9</h5>
               </div>
@@ -125,7 +128,7 @@ function App() {
                 <h5>II</h5>
               </div>
             </div>
-            <div className="row " id="linha-5"> {/* > 40,0 */}
+            <div className="row" id="linha-5"> {/* > 40,0 */}
               <div className="col-md-4">
                 <h5>Maior que 40,0</h5>
               </div>
