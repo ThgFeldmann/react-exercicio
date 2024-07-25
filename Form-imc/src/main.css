@@ -15,7 +15,7 @@ input {
     font-size: 16px;
 }
 
-#first-input {
+#firstInput {
     margin-bottom: 8px;
 }
 
@@ -26,7 +26,6 @@ h3 {
 
 hr {
     margin-top: 0;
-    margin-left: -49px;
 }
 
 .highlited {
@@ -36,4 +35,10 @@ hr {
 
 .hidden {
     display: none;
+}
+
+.tabela {
+    width: 60%;
+    position: relative;
+    left: 20%;
 }
