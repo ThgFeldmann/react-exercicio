@@ -3,76 +3,84 @@ import { useState } from "react";
 function App() {
   let [altura, setAltura] = useState('');
   let [peso, setPeso] = useState('');
-
   let [imc, setImc] = useState('');
+
+  let selectedRow = '';
+
+  const calculo = () => { // function q calcula o imc
+    imc = Math.round(peso / (altura * altura) * 100) / 100;
+  }
+
+  function validaValores() {
+    if (altura != ('') && peso != ('')) {
+      calculo();
+    } else {
+      imc = 0;
+    }
+  }
+
+  function indicaNaTabela() {
+    if (imc >= 40) {
+      selectedRow = document.getElementById("linha-5");
+      selectedRow.classList.add('highlited');
+    } else if (imc >= 30 && imc < 40) {
+      selectedRow = document.getElementById("linha-4");
+      selectedRow.classList.add('highlited');
+    } else if (imc >= 25 && imc < 30) {
+      selectedRow = document.getElementById("linha-3");
+      selectedRow.classList.add('highlited');
+    } else if (imc >= 18.5 && imc < 25) {
+      selectedRow = document.getElementById("linha-2");
+      selectedRow.classList.add('highlited');
+    } else if (imc != 0 && imc < 18.5) {
+      selectedRow = document.getElementById("linha-1");
+      selectedRow.classList.add('highlited');
+    }
+  }
+
+  function printImc() {
+    return (
+      <h3 id="imcText" className="text-center mb-4 border border-dark rounded bg-success text-white hidden">Seu IMC é: {imc}</h3>
+    )
+  }
+
+  function removeHighlited() {
+    console.log(selectedRow);
+    if (selectedRow != '') {
+      if (selectedRow.classList.contains('highlited') == true) {
+        selectedRow.classList.remove('highlited');
+        selectedRow = '';
+        console.log("TESTE");
+      }
+    }
+  }
+
+  function buttonClick() {
+    removeHighlited();
     
-    const calculo = () => { // arrow function q calcula o imc
-        setImc = Math.round(peso / (altura * altura) * 100) / 100;
-        imc = setImc;
-    }
+    altura = document.getElementById('firstInput').value;
+    peso = document.getElementById('lastInput').value;
+    
+    validaValores();
+    indicaNaTabela();
+    
+    setImc(imc);
+    let imcShowed = document.getElementById("imcText");
+    imcShowed.classList.remove('hidden');
+  }
 
-    function validaValores() {
-      if (altura != ('') && peso != ('')) {
-        calculo();
-      } else {
-        imc = 0;
-      }
-    }
-
-    function indicaNaTabela() {
-      if (imc >= 40) {
-        let selectedRow = document.getElementById("linha-5");
-        selectedRow.classList.add('highlited');
-        return selectedRow = '';
-      } else if (imc >= 30 && imc < 40) {
-        let selectedRow = document.getElementById("linha-4");
-        selectedRow.classList.add('highlited');
-        return selectedRow = '';
-      } else if (imc >= 25 && imc < 30) {
-        let selectedRow = document.getElementById("linha-3");
-        selectedRow.classList.add('highlited');
-        return selectedRow = '';
-      } else if (imc >= 18.5 && imc < 25) {
-        let selectedRow = document.getElementById("linha-2");
-        selectedRow.classList.add('highlited');
-        return selectedRow ='';
-      } else if (imc < 18.5) ;{
-        let selectedRow = document.getElementById("linha-1");
-        selectedRow.classList.add('highlited');
-        return selectedRow = '';
-      }
-    }
-
-    function buttonClick() {
-      altura = document.getElementById('firstInput').value;
-      peso = document.getElementById('lastInput').value;
-      
-      validaValores();
-      indicaNaTabela();
-
-      console.log(imc);
-
-      if (validate = true) {
-        let imcShowed = document.getElementById("imcText");
-        imcShowed.classList.remove('hidden');
-      } else {
-        let imcShowed = document.getElementById("imcText");
-        imcShowed.classList.add('hidden');
-      }
-    }
-
-    return(
-      <div class="container">
-        <h1 className="text-center">Calculadora de IMC</h1>
-          <form class="row d-flex justify-content-center">
-            <input id="firstInput" type="number" placeholder="Digite sua altura" />
-            <input id="lastInput" type="number" placeholder="Digite seu peso" />
-            <button type="button" className="btn btn-success border border-dark mt-2" onClick={event => buttonClick()}>
+  return(
+    <div class="container">
+      <h1 className="text-center">Calculadora de IMC</h1>
+        <form class="row d-flex justify-content-center">
+          <input id="firstInput" type="number" placeholder="Digite sua altura" />
+          <input id="lastInput" type="number" placeholder="Digite seu peso" />
+          <button type="button" className="btn btn-success border border-dark mt-2" onClick={event => buttonClick()}>
               Calcular
-            </button>
-          </form>
-          <h3 id="imcText" className="text-center mb-4 border border-dark rounded bg-success text-white hidden">Seu IMC é: {'ola'}</h3>
-          <div className="border rounded border-dark tabela"> {/* tabela */}
+          </button>
+        </form>
+        {printImc()}
+        <div className="border rounded border-dark tabela"> {/* tabela */}
             <div className="row m-3 text-center border-bottom border-dark"> {/* titulo da tabela */}
               <h2>Tabela de interpretação do IMC</h2>
             </div>
@@ -145,9 +153,9 @@ function App() {
                 </div>
               </div>
             </div>
-          </div>
-      </div>
-    )
+        </div>
+    </div>
+  )
 }
 
 export default App
