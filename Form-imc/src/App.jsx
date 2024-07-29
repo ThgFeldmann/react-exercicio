@@ -1,21 +1,32 @@
 import { useState } from "react";
 
 function App() {
-  let [altura, setAltura] = useState('');
-  let [peso, setPeso] = useState('');
   let [imc, setImc] = useState('');
+  let altura = '';
+  let peso = '';
 
   let selectedRow = '';
+
+  let foiIndicado;
 
   const calculo = () => { // function q calcula o imc
     imc = Math.round(peso / (altura * altura) * 100) / 100;
   }
 
+  function coletaValores() {
+    altura = document.getElementById('firstInput').value;
+    peso = document.getElementById('lastInput').value;
+  }
+
   function validaValores() {
+    coletaValores();
+
     if (altura != ('') && peso != ('')) {
       calculo();
     } else {
-      imc = 0;
+      return (
+        <h3 id="imcText" className="text-center mb-4 border border-dark rounded bg-success text-white hidden">Os valores inseridos não são válidos. </h3>
+      )
     }
   }
 
@@ -23,19 +34,25 @@ function App() {
     if (imc >= 40) {
       selectedRow = document.getElementById("linha-5");
       selectedRow.classList.add('highlited');
+      foiIndicado = true;
     } else if (imc >= 30 && imc < 40) {
       selectedRow = document.getElementById("linha-4");
       selectedRow.classList.add('highlited');
+      foiIndicado = true;
     } else if (imc >= 25 && imc < 30) {
       selectedRow = document.getElementById("linha-3");
       selectedRow.classList.add('highlited');
+      foiIndicado = true;
     } else if (imc >= 18.5 && imc < 25) {
       selectedRow = document.getElementById("linha-2");
       selectedRow.classList.add('highlited');
+      foiIndicado = true;
     } else if (imc != 0 && imc < 18.5) {
       selectedRow = document.getElementById("linha-1");
       selectedRow.classList.add('highlited');
+      foiIndicado = true;
     }
+    buttonClick();
   }
 
   function printImc() {
@@ -44,26 +61,24 @@ function App() {
     )
   }
 
-  function removeHighlited() {
-    console.log(selectedRow);
-    if (selectedRow != '') {
-      if (selectedRow.classList.contains('highlited') == true) {
-        selectedRow.classList.remove('highlited');
-        selectedRow = '';
-        console.log("TESTE");
-      }
+  function removeDaTabela() {
+    if (foiIndicado == true) {
+      selectedRow.classList.remove("highlited");
+      selectedRow = '';
+      foiIndicado = false;
+    } else {
+      foiIndicado = false;
     }
   }
 
   function buttonClick() {
-    removeHighlited();
-    
-    altura = document.getElementById('firstInput').value;
-    peso = document.getElementById('lastInput').value;
-    
     validaValores();
+    console.log(foiIndicado)
+    removeDaTabela();
+    console.log(foiIndicado)
     indicaNaTabela();
-    
+    console.log(foiIndicado)
+
     setImc(imc);
     let imcShowed = document.getElementById("imcText");
     imcShowed.classList.remove('hidden');
@@ -163,5 +178,8 @@ export default App
 // p / h^2 | calculo imc
 
 // retirar o indicador na tabela ao alterar os valores | objetivo atual
+
+// a function de remover highlited funciona, somente após o
+// click do btn depois de calcular (total de 3 clicks) | erro
 
 // https://www.programasaudefacil.com.br/calculadora-de-imc | link imc calculator example
