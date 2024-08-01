@@ -4,19 +4,35 @@
     box-sizing: border-box;
 }
 
+.main-title {
+    margin-top: 8px;
+}
+
+.form-div {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
 form {
     width: 20%;
-    padding: 30px;
-    position: relative;
-    left: 40%;
 }
 
 input {
     font-size: 16px;
+    height: 35px;
 }
 
 #firstInput {
     margin-bottom: 8px;
+}
+
+.calculate {
+    font-size: larger;
+}
+
+h1 {
+    margin: 0 auto 8px;
 }
 
 h3 {
@@ -41,4 +57,23 @@ hr {
     width: 60%;
     position: relative;
     left: 20%;
+}
+
+.guide {
+    width: 35%;
+    margin: 0 auto;
+}
+
+.guide-title {
+    font-size: large;
+    margin: 8px 0 8px 20px;
+}
+
+.guide-list {
+    font-size: medium;
+}
+
+li {
+    margin-bottom: 4px;
+    margin-top: 4px;
 }
